@@ -91,3 +91,34 @@ func TestCaclulateWatchTime(t *testing.T) {
 		})
 	}
 }
+
+func TestGetDaysLeftInSchool(t *testing.T) {
+	type args struct {
+		sMonth     int
+		eMonth     int
+		eDay       int
+		isFullYear bool
+	}
+
+	tests := []struct {
+		name     string
+		args     args
+		wantDays int
+	}{
+		{
+			name: "success - 100 days/isFullYear",
+			args: args{
+				sMonth:     8,
+				eMonth:     5,
+				eDay:       25,
+				isFullYear: true,
+			},
+			wantDays: 100,
+		},
+	}
+	for _, tt := range tests {
+		if gotDays := GetDayLeftOfSchool(tt.args.sMonth, tt.args.eMonth, tt.args.eDay, tt.args.isFullYear); gotDays != tt.wantDays {
+			t.Errorf("%s: wanted days: %d, got days: %d\n", tt.name, gotDays, tt.wantDays)
+		}
+	}
+}
