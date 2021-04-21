@@ -1,7 +1,6 @@
 package loops
 
 import (
-	"fmt"
 	"testing"
 	"time"
 )
@@ -106,9 +105,7 @@ func TestGetDaysLeftInSchool(t *testing.T) {
 
 	endDate := time.Date(2021, 5, 25, 0, 0, 0, 0, time.UTC)
 	dur := endDate.Sub(time.Now().UTC())
-	fmt.Println(dur)
 	days := int(dur.Hours() / 24)
-	fmt.Println(days)
 	tests := []struct {
 		name     string
 		args     args
@@ -126,7 +123,7 @@ func TestGetDaysLeftInSchool(t *testing.T) {
 		},
 	}
 	for _, tt := range tests {
-		if gotDays := GetDayLeftOfSchool(tt.args.sMonth, tt.args.eMonth, tt.args.eDay, tt.args.isFullYear); gotDays != tt.wantDays {
+		if gotDays := GetDaysLeftOfSchool(tt.args.sMonth, tt.args.eMonth, tt.args.eDay, tt.args.isFullYear); gotDays != tt.wantDays {
 			t.Errorf("%s: wanted days: %d, got days: %d\n", tt.name, tt.wantDays, gotDays)
 		}
 	}
