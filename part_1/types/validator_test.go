@@ -120,7 +120,7 @@ func TestResponder_sendResponse(t *testing.T) {
 			},
 			request:   payloadGood,
 			wantFail:  true,
-			wantError: fmt.Errorf("failed log response: failed to write response to DB"),
+			wantError: fmt.Errorf("fail log response: failed to write response to DB"),
 		},
 		{
 			name: "fail, API fail",
@@ -130,7 +130,7 @@ func TestResponder_sendResponse(t *testing.T) {
 			},
 			request:   payloadGood,
 			wantFail:  true,
-			wantError: fmt.Errorf("failed to notify servier response: failed to notify server"),
+			wantError: fmt.Errorf("fail to notify server response: failed to notify server"),
 		},
 		{
 			name: "fail, removing time",
@@ -146,8 +146,10 @@ func TestResponder_sendResponse(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			err := tt.r.sendResponse(tt.request)
-			if (err != nil) != tt.wantFail {
-				t.Errorf("Responder.sendResponse() error = %v, wantFail %v", err, tt.wantFail)
+			if err != nil {
+				if !tt.wantFail {
+					t.Errorf("Responder.sendResponse() error = %v, wantFail %v", err, tt.wantFail)
+				}
 				if err.Error() != tt.wantError.Error() {
 					t.Errorf("Responder.sendResponse() error = %v, wantError %v", err, tt.wantError)
 				}
